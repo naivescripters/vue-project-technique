@@ -15,14 +15,23 @@
     </div>
 
     <div class="post-content">
-      <div v-if="!editing">
-        {{ post.text }}
-      </div>
+      <template v-if="!editing"> 
+        <div>
+          {{ post.text }}
+        </div>
+        <a @click="editing = true" href="#" style="margin-left: auto;" class="link-unstyled" title="Make a change"><i class="fa fa-pencil"></i>edit</a>
+      </template>
+      
       <div v-else>
-        <PostEditor :post="post" @save="editing = false"/>
+        <PostEditor 
+          :post="post" 
+          @save="editing = false" 
+          @cancel="editing = false"
+        />
       </div>
-    </div>
 
+    </div>
+ 
     <div class="post-date text-faded">
       <AppDate :timestamp="post.publishedAt" />
     </div>
@@ -45,7 +54,7 @@ export default {
   },
   data () {
     return {
-      editing: true
+      editing: false
     }
   },
   computed: {
