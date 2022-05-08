@@ -15,10 +15,11 @@
     </div>
 
     <div class="post-content">
-      <div>
-        <p>
-          {{ post.text }}
-        </p>
+      <div v-if="!editing">
+        {{ post.text }}
+      </div>
+      <div v-else>
+        <PostEditor :post="post" @save="editing = false"/>
       </div>
     </div>
 
@@ -30,12 +31,21 @@
 
 <script>
 import {countObjectProperties} from '@/utils'
+import PostEditor from './PostEditor.vue'
 
 export default {
   props: {
     post: {
       required: true,
       type: Object
+    }
+  },
+  components: {
+    PostEditor
+  },
+  data () {
+    return {
+      editing: true
     }
   },
   computed: {
